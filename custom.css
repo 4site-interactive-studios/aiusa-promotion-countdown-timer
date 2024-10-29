@@ -1,4 +1,4 @@
-.countdown-bar{
+.iframe-page-97930 .countdown-bar{
     display: flex;
     width: 100%;
     background-color: yellow;
@@ -11,17 +11,17 @@
     padding: 0.5rem;
 }
 
-.countdown-bar h2{
+.iframe-page-97930 .countdown-bar h2{
     margin-bottom: 0;
     font-size: 2.5rem;
 }
 
-.countdown-bar img{
+.iframe-page-97930 .countdown-bar img{
     height: 50px;
 }
 
 @media screen and (max-width: 899px){
-    .countdown-bar {
+    .iframe-page-97930 .countdown-bar {
         max-width: 400px;
         flex-wrap: wrap;
         margin-left: auto;
@@ -30,11 +30,11 @@
         gap: 0.5rem;
     }
 
-    .countdown-bar h2{
+    .iframe-page-97930 .countdown-bar h2{
         font-size: 2rem;
     }
 }
 
-.foursiteDonationLightbox .foursiteDonationLightbox-container .dl-logo{
+.foursiteDonationLightbox.iframe-page-97930 .foursiteDonationLightbox-container .dl-logo{
     left: -1px !important;
 }

@@ -41,13 +41,12 @@
       const footerBottom = footer.getBoundingClientRect().bottom;
       const windowHeight = window.innerHeight;
 
-      const spaceBelowFooter = windowHeight - footerBottom; // Space below .dl-footer to the bottom of the window
-      const spaceAboveCountdownBar = countdownBarTop; // Space above .countdown-bar to the top of the page
+      const spaceBelowFooter = windowHeight - footerBottom;
+      const spaceAboveCountdownBar = countdownBarTop;
 
       debugLog(`Space Above Countdown Bar: ${spaceAboveCountdownBar}px`);
       debugLog(`Space Below Footer: ${spaceBelowFooter}px`);
 
-      // No position adjustment is made anymore, just logging the space
       debugLog('No position adjustment logic is applied.');
     } else {
       debugLog('One or more required elements were not found.');
@@ -65,28 +64,51 @@
         if (node.nodeType === 1 && node.classList.contains('foursiteDonationLightbox')) {
           debugLog('foursiteDonationLightbox div has been added to the page');
 
-          // Create the new countdown bar div
-          const newDiv = document.createElement('div');
-          newDiv.classList.add('countdown-bar'); // Add the class 'countdown-bar'
+          // Look for the iframe inside the "foursiteDonationLightbox" element
+          const iframe = node.querySelector('iframe');
+          if (iframe) {
+            const iframeUrl = iframe.getAttribute('src');
+            const match = iframeUrl.match(/\/page\/(\d+)\//);
+            if (match) {
+              const pageId = match[1];
+              debugLog(`Detected iframe page ID: ${pageId}`);
 
-          // Create an h2 element with the new copy and classes
-          const h2Element = document.createElement('h2');
-          h2Element.classList.add('h2', 'mb-2xs');
-          h2Element.textContent = 'Limited time match';
+              // Run only if page ID is "97930"
+              if (pageId === "97930") {
+                const newClass = `iframe-page-${pageId}`;
+                node.classList.add(newClass);
+                debugLog(`Added class "${newClass}" to foursiteDonationLightbox`);
 
-          // Add the h2 and image to the new div
-          newDiv.appendChild(h2Element);
-          newDiv.innerHTML += `<img src="https://img1.niftyimages.com/j9g/sq05/yln5" alt="Countdown timer" style="width:100%; max-width: 204px; height: auto;">`;
+                // Create the new countdown bar div
+                const newDiv = document.createElement('div');
+                newDiv.classList.add('countdown-bar');
 
-          // Insert the new div before the .dl-content element
-          const dlContent = document.querySelector('.dl-content');
-          if (dlContent) {
-            dlContent.insertAdjacentElement('beforebegin', newDiv);
-            debugLog('A countdown bar was added before .dl-content');
-            adjustContainerPosition(); // Run immediately on page load
+                // Create an h2 element with the new copy and classes
+                const h2Element = document.createElement('h2');
+                h2Element.classList.add('h2', 'mb-2xs');
+                h2Element.textContent = 'Limited time match';
+
+                // Add the h2 and image to the new div
+                newDiv.appendChild(h2Element);
+                newDiv.innerHTML += `<img src="https://img1.niftyimages.com/j9g/sq05/yln5" alt="Countdown timer" style="width:100%; max-width: 204px; height: auto;">`;
+
+                // Insert the new div before the .dl-content element
+                const dlContent = document.querySelector('.dl-content');
+                if (dlContent) {
+                  dlContent.insertAdjacentElement('beforebegin', newDiv);
+                  debugLog('A countdown bar was added before .dl-content');
+                  adjustContainerPosition();
+                }
+              } else {
+                debugLog('The page ID does not match "97930"; script will not run.');
+              }
+            } else {
+              debugLog('No page ID found in iframe URL');
+            }
+          } else {
+            debugLog('No iframe found inside foursiteDonationLightbox');
           }
 
-          // Disconnect the observer once the task is complete
           observer.disconnect();
         }
       });
@@ -101,7 +123,7 @@
 
   // Listen for changes in the .countdown-bar size (if it dynamically changes)
   const countdownBarObserver = new MutationObserver(() => {
-    debouncedAdjustPosition(); // Debounced for subsequent events
+    debouncedAdjustPosition();
   });
 
   // Start observing changes to the .countdown-bar
