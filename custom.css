@@ -1,0 +1,40 @@
+.countdown-bar{
+    display: flex;
+    width: 100%;
+    background-color: yellow;
+    color: black;
+    margin-bottom: 0.5rem;
+    border-radius: 5px;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem;
+}
+
+.countdown-bar h2{
+    margin-bottom: 0;
+    font-size: 2.5rem;
+}
+
+.countdown-bar img{
+    height: 50px;
+}
+
+@media screen and (max-width: 899px){
+    .countdown-bar {
+        max-width: 400px;
+        flex-wrap: wrap;
+        margin-left: auto;
+        margin-right: auto;
+        padding-top: 1rem;
+        gap: 0.5rem;
+    }
+
+    .countdown-bar h2{
+        font-size: 2rem;
+    }
+}
+
+.foursiteDonationLightbox .foursiteDonationLightbox-container .dl-logo{
+    left: -1px !important;
+}
